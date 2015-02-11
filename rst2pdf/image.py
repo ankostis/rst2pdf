@@ -9,8 +9,10 @@ from reportlab.platypus.flowables import Image, Flowable
 from .log import log, nodeid
 from reportlab.lib.units import *
 import glob
-import urllib.request, urllib.parse, urllib.error
-
+try:
+    import urllib.request as urlrequest
+except ImportError:
+    from urllib2 import urlopen as urlrequest
 from .opt_imports import LazyImports
 
 from .svgimage import SVGImage
@@ -78,7 +80,7 @@ class MyImage (Flowable):
 
         if filename.split("://")[0].lower() in ('http', 'ftp', 'https'):
             try:
-                filename2, _ = urllib.request.urlretrieve(filename)
+                filename2, _ = urlrequest.urlretrieve(filename)
                 if filename != filename2:
                     client.to_unlink.append(filename2)
                     filename = filename2
@@ -283,7 +285,7 @@ class MyImage (Flowable):
         if uri.split("://")[0].lower() not in ('http', 'ftp', 'https'):
             uri = os.path.join(client.basedir, uri)
         else:
-            uri, _ = urllib.request.urlretrieve(uri)
+            uri, _ = urlrequest.urlretrieve(uri)
             client.to_unlink.append(uri)
 
         srcinfo = client, uri

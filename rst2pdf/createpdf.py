@@ -55,7 +55,10 @@ from . import config
 import logging
 from io import StringIO
 from os.path import abspath, dirname, expanduser, join
-from urllib.parse import urljoin, urlparse, urlunparse
+try:
+    from urllib.parse import urljoin, urlparse, urlunparse ## PY3
+except ImportError:
+    from urlparse import urljoin, urlparse, urlunparse ## PY2
 from copy import copy, deepcopy
 from optparse import OptionParser
 from pprint import pprint

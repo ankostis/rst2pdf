@@ -11,7 +11,10 @@ from xml.sax.saxutils import escape
 from .log import log, nodeid
 from .basenodehandler import NodeHandler
 import docutils.nodes
-from urllib.parse import urljoin, urlparse
+try:
+    from urllib.parse import urljoin, urlparse, urlunparse ## PY3
+except ImportError:
+    from urlparse import urljoin, urlparse, urlunparse ## PY2
 from reportlab.lib.units import cm
 from .opt_imports import Paragraph
 

@@ -3,7 +3,10 @@
 """Singleton config object"""
 
 
-import configparser
+try:
+    import configparser
+except ImportError:
+    import ConfigParser as configparser
 import os
 from rst2pdf.rson import loads
 
